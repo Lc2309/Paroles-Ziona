@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     // Mode Production (Vercel)
     try {
       authOptions = {
-        credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY),
+        credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n')),
         scopes: ['https://www.googleapis.com/auth/drive.readonly'],
       };
     } catch (e) {
