@@ -3,8 +3,12 @@ const { google } = require('googleapis');
 const path = require('path');
 
 module.exports = async (req, res) => {
-  // Récupération sécurisée du paramètre de recherche
-  const query = req.query.q;
+  // Utilisation de l'API URL standard (WHATWG) pour éviter le DeprecationWarning
+  const protocol = req.headers['x-forwarded-proto'] || 'http';
+  const host = req.headers.host;
+  const fullUrl = new URL(req.url, `${protocol}://${host}`);
+  const query = fullUrl.searchParams.get('q');
+  
   const folderId = process.env.GOOGLE_FOLDER_ID;
 
   let authOptions;
