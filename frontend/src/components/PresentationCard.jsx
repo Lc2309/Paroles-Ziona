@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  // Dégradé conforme à la charte HealthPoint/Ziona
+  const zionaGradient = "bg-gradient-to-r from-[#03438A] via-[#E3161B] to-yellow-400";
+
   return (
     <>
       {/* VERSION DESKTOP (Grille de cartes avec images) */}
@@ -17,23 +20,29 @@ const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
               src={thumbnail.replace('=s220', '=s600')} 
               alt={title} 
               className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
+              referrerPolicy="no-referrer" // Important pour afficher les images Google Drive
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-50 text-[#03438A] font-bold">ZIONA</div>
           )}
+          
+          {/* Overlay au survol avec bouton en dégradé */}
           <div className={`absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-            <button onClick={onView} className="bg-ziona-gradient text-white px-8 py-3 rounded-xl font-bold shadow-lg">
+            <button 
+              onClick={onView} 
+              className={`${zionaGradient} text-white px-8 py-3 rounded-xl font-bold shadow-lg transform transition-transform hover:scale-105`}
+            >
               Consulter
             </button>
           </div>
         </div>
+
         <div className="p-4 flex justify-between items-start bg-white flex-grow">
           <h3 className="font-bold text-gray-800 text-lg line-clamp-2 leading-tight flex-1">{title}</h3>
           <a 
             href={downloadLink} 
-            download={`${title}.pptx`}
             className="ml-2 p-2 text-gray-400 hover:text-[#E3161B] transition-colors"
+            title="Télécharger"
             onClick={(e) => e.stopPropagation()}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,13 +62,12 @@ const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
         <div className="flex items-center gap-1">
           <button 
             onClick={onView}
-            className="bg-ziona-gradient text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm"
+            className={`${zionaGradient} text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm active:scale-95 transition-transform`}
           >
             Voir
           </button>
           <a 
             href={downloadLink} 
-            download={`${title}.pptx`}
             className="p-2 text-gray-400 active:text-[#E3161B]"
             onClick={(e) => e.stopPropagation()}
           >

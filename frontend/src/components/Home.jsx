@@ -16,15 +16,25 @@ const Home = () => {
   const fetchFiles = async (searchTerm = '') => {
     setLoading(true);
     try {
-      // CHANGEMENT ICI : Utilisation d'un chemin relatif pour Vercel
+      // Appel vers la Serverless Function Vercel (frontend/api/search.js)
       const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}`);
+      
+      if (!response.ok) {
+        throw new Error(`Erreur serveur: ${response.status}`);
+      }
+
       const data = await response.json();
+      
       if (data.results) {
-        if (searchTerm === '') setSuggestions(data.results.slice(0, 3));
-        else setResults(data.results);
+        if (searchTerm === '') {
+          setSuggestions(data.results.slice(0, 3));
+        } else {
+          setResults(data.results);
+        }
       }
     } catch (error) {
       console.error("Erreur de recherche:", error);
+      setResults([]);
     } finally {
       setLoading(false);
     }
@@ -63,9 +73,10 @@ const Home = () => {
               className="w-full px-5 md:px-8 py-4 md:py-5 rounded-full border-2 border-gray-100 shadow-xl focus:border-[#03438A] outline-none text-base md:text-lg pr-16 md:pr-40 transition-all"
             />
             
+            {/* Bouton avec dégradé selon la charte */}
             <button 
               onClick={handleSearch} 
-              className="absolute right-2 top-2 bottom-2 bg-ziona-gradient text-white px-4 md:px-8 rounded-full font-bold shadow-md hover:opacity-90 transition-all flex items-center justify-center"
+              className="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-[#03438A] via-[#E3161B] to-yellow-400 text-white px-4 md:px-8 rounded-full font-bold shadow-md hover:opacity-90 transition-all flex items-center justify-center"
             >
               <span className="hidden md:inline">Rechercher</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,7 +91,7 @@ const Home = () => {
           {loading ? 'Chargement...' : (hasSearched ? `Résultats (${results.length})` : 'Suggestions')}
         </h3>
 
-        {/* Grille de fichiers responsive (Cards sur PC, Lignes sur Mobile via PresentationCard) */}
+        {/* Grille de fichiers */}
         {!loading && hasSearched && results.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-3xl shadow-inner">
             <h2 className="text-2xl md:text-4xl font-black text-gray-200 uppercase">Aucun Résultat</h2>
