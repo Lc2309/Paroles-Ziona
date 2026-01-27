@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Dégradé conforme : Ziona Blue -> Ziona Red -> Ziona Yellow
-  const zionaGradient = "bg-gradient-to-r from-[#060BEB] via-[#F60302] to-[#FAD801]";
+  // Dégradé strict : Ziona Blue (#060BEB) -> Ziona Red (#F60302)
+  const zionaGradient = "bg-gradient-to-r from-[#060BEB] to-[#F60302]";
 
   return (
     <>
-      {/* VERSION DESKTOP */}
       <div 
         className="hidden md:flex flex-col relative group bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-100 h-full"
         onMouseEnter={() => setIsHovered(true)}
@@ -51,7 +50,6 @@ const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
         </div>
       </div>
 
-      {/* VERSION MOBILE */}
       <div className="flex md:hidden w-full bg-white rounded-xl shadow-sm border border-gray-100 p-4 items-center gap-3">
         <div className="flex-1 min-w-0">
           <h3 className="text-gray-800 font-bold text-base leading-snug break-words line-clamp-2">

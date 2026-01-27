@@ -66,10 +66,9 @@ const Home = () => {
               className="w-full px-5 md:px-8 py-4 md:py-5 rounded-full border-2 border-gray-100 shadow-xl focus:border-[#060BEB] outline-none text-base md:text-lg pr-16 md:pr-40 transition-all"
             />
             
-            {/* Bouton avec dégradé strict : Bleu -> Rouge -> Jaune */}
             <button 
               onClick={handleSearch} 
-              className="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-[#060BEB] via-[#F60302] to-[#FAD801] text-white px-4 md:px-8 rounded-full font-bold shadow-md hover:opacity-90 transition-all flex items-center justify-center"
+              className="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-[#060BEB] to-[#F60302] text-white px-4 md:px-8 rounded-full font-bold shadow-md hover:opacity-90 transition-all flex items-center justify-center"
             >
               <span className="hidden md:inline">Rechercher</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
