@@ -3,30 +3,29 @@ import React, { useState } from 'react';
 const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Dégradé conforme à la charte HealthPoint/Ziona
-  const zionaGradient = "bg-gradient-to-r from-[#03438A] via-[#E3161B] to-yellow-400";
+  // Dégradé conforme : Ziona Blue -> Ziona Red -> Ziona Yellow
+  const zionaGradient = "bg-gradient-to-r from-[#060BEB] via-[#F60302] to-[#FAD801]";
 
   return (
     <>
-      {/* VERSION DESKTOP (Grille de cartes avec images) */}
+      {/* VERSION DESKTOP */}
       <div 
         className="hidden md:flex flex-col relative group bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-100 h-full"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="h-48 w-full bg-[#03438A]/10 relative">
+        <div className="h-48 w-full bg-[#060BEB]/10 relative">
           {thumbnail ? (
             <img 
               src={thumbnail.replace('=s220', '=s600')} 
               alt={title} 
               className="w-full h-full object-cover"
-              referrerPolicy="no-referrer" // Important pour afficher les images Google Drive
+              referrerPolicy="no-referrer"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-50 text-[#03438A] font-bold">ZIONA</div>
+            <div className="w-full h-full flex items-center justify-center bg-gray-50 text-[#060BEB] font-bold">ZIONA</div>
           )}
           
-          {/* Overlay au survol avec bouton en dégradé */}
           <div className={`absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
             <button 
               onClick={onView} 
@@ -41,7 +40,7 @@ const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
           <h3 className="font-bold text-gray-800 text-lg line-clamp-2 leading-tight flex-1">{title}</h3>
           <a 
             href={downloadLink} 
-            className="ml-2 p-2 text-gray-400 hover:text-[#E3161B] transition-colors"
+            className="ml-2 p-2 text-gray-400 hover:text-[#F60302] transition-colors"
             title="Télécharger"
             onClick={(e) => e.stopPropagation()}
           >
@@ -52,7 +51,7 @@ const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
         </div>
       </div>
 
-      {/* VERSION MOBILE (Lignes compactes sans image) */}
+      {/* VERSION MOBILE */}
       <div className="flex md:hidden w-full bg-white rounded-xl shadow-sm border border-gray-100 p-4 items-center gap-3">
         <div className="flex-1 min-w-0">
           <h3 className="text-gray-800 font-bold text-base leading-snug break-words line-clamp-2">
@@ -68,7 +67,7 @@ const PresentationCard = ({ title, thumbnail, downloadLink, onView }) => {
           </button>
           <a 
             href={downloadLink} 
-            className="p-2 text-gray-400 active:text-[#E3161B]"
+            className="p-2 text-gray-400 active:text-[#F60302]"
             onClick={(e) => e.stopPropagation()}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

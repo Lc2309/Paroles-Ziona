@@ -8,7 +8,6 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Fonction pour transformer l'ID en lien de téléchargement direct PPTX
   const getDirectDownloadLink = (id) => {
     return `https://docs.google.com/presentation/d/${id}/export/pptx`;
   };
@@ -16,13 +15,8 @@ const Home = () => {
   const fetchFiles = async (searchTerm = '') => {
     setLoading(true);
     try {
-      // Appel vers la Serverless Function Vercel (frontend/api/search.js)
       const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}`);
-      
-      if (!response.ok) {
-        throw new Error(`Erreur serveur: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
       const data = await response.json();
       
       if (data.results) {
@@ -54,12 +48,11 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start py-8 md:py-12 px-4 bg-gray-50 min-h-screen">
+    <div className="flex flex-col items-center justify-start py-8 md:py-12 px-4 bg-[#F5F5F5] min-h-screen">
       <div className="max-w-5xl w-full">
         
-        {/* Section Titre & Recherche */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-extrabold text-[#03438A] mb-6 uppercase tracking-tight">
+          <h2 className="text-2xl md:text-4xl font-extrabold text-[#060BEB] mb-6 uppercase tracking-tight">
             Mitady Paroles?
           </h2>
           
@@ -70,13 +63,13 @@ const Home = () => {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               placeholder="Titre ou mot-clé..."
-              className="w-full px-5 md:px-8 py-4 md:py-5 rounded-full border-2 border-gray-100 shadow-xl focus:border-[#03438A] outline-none text-base md:text-lg pr-16 md:pr-40 transition-all"
+              className="w-full px-5 md:px-8 py-4 md:py-5 rounded-full border-2 border-gray-100 shadow-xl focus:border-[#060BEB] outline-none text-base md:text-lg pr-16 md:pr-40 transition-all"
             />
             
-            {/* Bouton avec dégradé selon la charte */}
+            {/* Bouton avec dégradé strict : Bleu -> Rouge -> Jaune */}
             <button 
               onClick={handleSearch} 
-              className="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-[#03438A] via-[#E3161B] to-yellow-400 text-white px-4 md:px-8 rounded-full font-bold shadow-md hover:opacity-90 transition-all flex items-center justify-center"
+              className="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-[#060BEB] via-[#F60302] to-[#FAD801] text-white px-4 md:px-8 rounded-full font-bold shadow-md hover:opacity-90 transition-all flex items-center justify-center"
             >
               <span className="hidden md:inline">Rechercher</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,12 +79,10 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Sous-titre dynamique */}
-        <h3 className="text-lg md:text-xl font-bold text-gray-700 mb-6 md:mb-8 px-4 border-l-4 border-yellow-400">
+        <h3 className="text-lg md:text-xl font-bold text-gray-700 mb-6 md:mb-8 px-4 border-l-4 border-[#FAD801]">
           {loading ? 'Chargement...' : (hasSearched ? `Résultats (${results.length})` : 'Suggestions')}
         </h3>
 
-        {/* Grille de fichiers */}
         {!loading && hasSearched && results.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-3xl shadow-inner">
             <h2 className="text-2xl md:text-4xl font-black text-gray-200 uppercase">Aucun Résultat</h2>
